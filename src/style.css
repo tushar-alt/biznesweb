@@ -1,0 +1,816 @@
+/* ==========================================================
+🎨 BizWeb — Premium Sketch Design (Final + Footer + Contact + Custom Cursor)
+========================================================== */
+/* ==========================================================
+🖱️ CUSTOM GLOWING CURSOR — WORKS ON ALL PAGES
+========================================================== */
+/* Light Mode: Glowing black ball */
+* {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%23000' opacity='0.8'/%3E%3Cfilter id='glow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='2' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3Ccircle cx='12' cy='12' r='8' fill='%23000' opacity='0.8' filter='url(%23glow)'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+/* Dark Mode: Glowing white ball */
+body.dark-mode *,
+html.dark-mode *,
+.dark-mode * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%23fff' opacity='0.9'/%3E%3Cfilter id='glow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='2' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3Ccircle cx='12' cy='12' r='8' fill='%23fff' opacity='0.9' filter='url(%23glow)'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+body.dark-mode button,
+body.dark-mode .back-btn,
+body.dark-mode .service-link,
+body.dark-mode .app-tile-link,
+body.dark-mode .web-tile-link,
+body.dark-mode .software-tile-link,
+body.dark-mode .design-tile-link,
+body.dark-mode .footer-link,
+body.dark-mode .contact-link,
+body.dark-mode .theme-toggle,
+body.dark-mode .sketch-btn,
+body.dark-mode .submit-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23fafafa'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+/* ==========================================================
+🎨 GLOBAL RESET & BASE
+========================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* ==========================================================
+🧾 BACKGROUND — PARALLAX PAPER (FIXED URLs)
+========================================================== */
+body {
+  width: 100%;
+  font-family: "Patrick Hand", "Architects Daughter", cursive;
+  color: #111;
+  background-color: #f8f6f2;
+  background-image:
+    url("https://www.transparenttextures.com/patterns/paper-fibers.png"),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9), rgba(230,230,230,0.6));
+  background-blend-mode: multiply;
+  background-size: 400px 400px, cover;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+body.dark-mode {
+  color: #fafafa;
+  background-color: #1c1c1c;
+  background-image:
+    url("https://www.transparenttextures.com/patterns/asfalt-light.png"),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05), rgba(0,0,0,0.9));
+  background-blend-mode: soft-light;
+}
+
+/* ==========================================================
+🌌 DOODLE CANVAS
+========================================================== */
+#possibilityCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* ==========================================================
+🏠 HERO SECTION
+========================================================== */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: fadeInOpacity 1.2s ease forwards;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 2.1rem;
+  line-height: 1.5;
+  margin-bottom: 1.4rem;
+}
+
+.hero-content p {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+/* ==========================================================
+🚀 SKETCH BUTTON
+========================================================== */
+.sketch-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.4rem;
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.4rem;
+  color: #111;
+  background: rgba(255, 255, 255, 0.6);
+  border: none;
+  border-radius: 12px;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23111'/%3E%3C/svg%3E") 12 12, pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(4px);
+  transition: all 0.35s ease;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+body.dark-mode .sketch-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23fafafa'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+.sketch-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: #000;
+}
+
+.sketch-btn::before,
+.sketch-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid #111;
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.sketch-btn:hover::before {
+  opacity: 1;
+  transform: scale(1.05) rotate(-0.8deg);
+  animation: drawBorder 1.2s ease-in-out forwards;
+}
+
+.sketch-btn:hover::after {
+  opacity: 0.6;
+  transform: scale(0.96) rotate(0.5deg);
+  animation: drawBorderReverse 1.2s ease-in-out forwards;
+}
+
+@keyframes drawBorder {
+  0% { clip-path: polygon(0 100%, 0 100%, 0 100%, 0 100%); }
+  100% { clip-path: polygon(0 100%, 0 0, 100% 0, 100% 100%); }
+}
+
+@keyframes drawBorderReverse {
+  0% { clip-path: polygon(100% 0, 100% 0, 100% 0, 100% 0); }
+  100% { clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%); }
+}
+
+.sketch-btn .arrow {
+  position: relative;
+  margin-left: 12px;
+  width: 18px;
+  height: 2px;
+  background: #111;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.sketch-btn:hover .arrow {
+  width: 32px;
+}
+
+body.dark-mode .sketch-btn {
+  color: #fafafa;
+  background: rgba(30, 30, 30, 0.7);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .sketch-btn::before,
+body.dark-mode .sketch-btn::after {
+  border-color: #fafafa;
+}
+
+body.dark-mode .sketch-btn .arrow {
+  background: #fafafa;
+}
+
+body.dark-mode .sketch-btn:hover {
+  box-shadow: 0 8px 22px rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================
+🌊 HAND-DRAWN WAVE UNDERLINE
+========================================================== */
+.sketch-wave {
+  position: relative;
+  width: 200px;
+  height: 20px;
+  margin: 6px auto 0;
+  background: none;
+  overflow: visible;
+}
+
+.sketch-wave::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 12 Q30 4 55 12 T105 12 T155 12 T195 12' stroke='%23111' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  animation: waveMove 1.3s ease-in-out infinite alternate;
+  opacity: 0.8;
+  transform-origin: center;
+  filter: blur(0.2px);
+}
+
+body.dark-mode .sketch-wave::before {
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 12 Q30 4 55 12 T105 12 T155 12 T195 12' stroke='%23fafafa' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  opacity: 0.85;
+}
+
+@keyframes waveMove {
+  0% { transform: translateY(0) rotate(-1deg) scaleX(1); }
+  50% { transform: translateY(1px) rotate(1deg) scaleX(1.02); }
+  100% { transform: translateY(0) rotate(-1deg) scaleX(1); }
+}
+
+/* ==========================================================
+🌗 THEME TOGGLE
+========================================================== */
+.home-theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: max(30px, env(safe-area-inset-right));
+  z-index: 1000;
+}
+
+.theme-toggle {
+  width: 48px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23111'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+body.dark-mode .theme-toggle {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23fafafa'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+.toggle-track {
+  width: 100%;
+  height: 100%;
+  border: 2px solid #111;
+  border-radius: 30px;
+  background: #fff;
+  transition: background 0.3s ease;
+}
+
+.toggle-thumb {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #111;
+  border-radius: 50%;
+  background: #111;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: left 0.3s ease, background 0.3s ease;
+}
+
+body.dark-mode .toggle-track {
+  background: #222;
+  border-color: #fafafa;
+}
+
+body.dark-mode .toggle-thumb {
+  background: #fafafa;
+  border-color: #fafafa;
+  left: 24px;
+  transform: rotate(2deg);
+}
+
+/* ==========================================================
+🔙 BACK BUTTON
+========================================================== */
+.back-btn {
+  position: fixed;
+  top: 25px;
+  left: max(30px, env(safe-area-inset-left));
+  padding: 0.6rem 1.2rem;
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid #111;
+  border-radius: 10px;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23111'/%3E%3C/svg%3E") 12 12, pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.35s ease;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+body.dark-mode .back-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23fafafa'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+.back-btn .arrow-back {
+  display: block;
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.4s ease;
+}
+
+.back-btn:hover .arrow-back {
+  width: 24px;
+}
+
+.back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .back-btn {
+  background: rgba(25, 25, 25, 0.7);
+  border-color: #fafafa;
+  color: #fafafa;
+}
+
+body.dark-mode .back-btn:hover {
+  background: rgba(35, 35, 35, 0.9);
+}
+
+/* ==========================================================
+📩 CONTACT LINK (top-right, not on homepage)
+========================================================== */
+.contact-link {
+  position: fixed;
+  top: 22px;
+  right: 90px;
+  font-size: 1.4rem;
+  text-decoration: none;
+  z-index: 1000;
+  opacity: 0.85;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23111'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+body.dark-mode .contact-link {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23fafafa'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+.contact-link:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+body.dark-mode .contact-link {
+  opacity: 0.9;
+}
+
+/* ==========================================================
+🧩 SERVICES PAGE
+========================================================== */
+.services-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 7rem 2rem 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeInOpacity 1.2s ease forwards;
+}
+
+.services-header h1 {
+  font-size: 2.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.services-header .subtitle {
+  font-size: 1.3rem;
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+
+.service-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  margin-top: 2.5rem;
+}
+
+.service-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23111'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+body.dark-mode .service-link {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23fafafa'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+.service-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  padding: 2rem 1.6rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(4px);
+  transition: all 0.35s ease;
+  overflow: hidden;
+  color: #111;
+  font-family: "Patrick Hand", cursive;
+  opacity: 0;
+  transform: translateY(25px);
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.service-box:nth-child(1) { animation-delay: 0.2s; }
+.service-box:nth-child(2) { animation-delay: 0.4s; }
+.service-box:nth-child(3) { animation-delay: 0.6s; }
+.service-box:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.service-box::before,
+.service-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid #111;
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+
+.service-box:hover::before {
+  opacity: 1;
+  transform: scale(1.04) rotate(-0.8deg);
+  animation: drawBorder 1.2s ease-in-out forwards;
+}
+
+.service-box:hover::after {
+  opacity: 0.6;
+  transform: scale(0.96) rotate(0.5deg);
+  animation: drawBorderReverse 1.2s ease-in-out forwards;
+}
+
+.service-box:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.service-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.service-box p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+body.dark-mode .service-box {
+  color: #fafafa;
+  background: rgba(25, 25, 25, 0.7);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .service-box::before,
+body.dark-mode .service-box::after {
+  border-color: #fafafa;
+}
+
+body.dark-mode .service-box:hover {
+  background: rgba(35, 35, 35, 0.9);
+  box-shadow: 0 8px 22px rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================
+📄 DETAIL PAGES (webdev, appdev, etc.)
+========================================================== */
+.detail-page,
+.contact-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 7rem 2rem 4rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  animation: fadeInOpacity 1.2s ease forwards;
+}
+
+.detail-header h1,
+.contact-header h1 {
+  font-size: 2.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.detail-header .subtitle,
+.contact-header .subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 1.2rem;
+}
+
+.detail-content,
+.contact-form {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  text-align: left;
+  padding: 0 1rem;
+}
+
+.detail-content p {
+  margin-bottom: 1.2rem;
+}
+
+.detail-content ul {
+  text-align: left;
+  padding-left: 1.8rem;
+  margin: 1.2rem 0;
+}
+
+.detail-content li {
+  margin-bottom: 0.6rem;
+}
+
+/* ==========================================================
+📝 CONTACT FORM
+========================================================== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  align-self: flex-start;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.15rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid #111;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-control:focus {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+body.dark-mode .form-control {
+  background: rgba(25, 25, 25, 0.7);
+  border-color: #fafafa;
+  color: #fafafa;
+}
+
+body.dark-mode .form-control:focus {
+  background: rgba(35, 35, 35, 0.9);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.08);
+}
+
+textarea.form-control {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.submit-btn {
+  align-self: center;
+  margin-top: 0.8rem;
+  padding: 0.9rem 2.2rem;
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.3rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid #111;
+  border-radius: 12px;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23111'/%3E%3C/svg%3E") 12 12, pointer;
+  transition: all 0.35s ease;
+  letter-spacing: 0.5px;
+}
+
+body.dark-mode .submit-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23fafafa'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+}
+
+body.dark-mode .submit-btn {
+  background: rgba(25, 25, 25, 0.7);
+  border-color: #fafafa;
+  color: #fafafa;
+}
+
+body.dark-mode .submit-btn:hover {
+  background: rgba(35, 35, 35, 0.9);
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================
+📏 FOOTER DIVIDER — HAND-DRAWN LINE
+========================================================== */
+.footer-divider {
+  width: 100%;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q30 4 60 10 T120 10 T180 10 T240 10 T300 10 T360 10 T420 10 T480 10 T540 10 T600 10 T660 10 T720 10 T780 10 T840 10 T900 10 T960 10 T1020 10 T1080 10' stroke='%23111' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: auto 20px;
+  opacity: 0.7;
+  margin: 4rem auto 2rem;
+}
+
+body.dark-mode .footer-divider {
+  background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q30 4 60 10 T120 10 T180 10 T240 10 T300 10 T360 10 T420 10 T480 10 T540 10 T600 10 T660 10 T720 10 T780 10 T840 10 T900 10 T960 10 T1020 10 T1080 10' stroke='%23fafafa' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  opacity: 0.8;
+}
+
+/* ==========================================================
+📄 SITE FOOTER
+========================================================== */
+.site-footer {
+  padding: 2rem 2rem 3rem;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(6px);
+  border-top: 2px solid rgba(17, 17, 17, 0.1);
+  margin-top: auto;
+}
+
+body.dark-mode .site-footer {
+  background: rgba(25, 25, 25, 0.5);
+  border-top-color: rgba(250, 250, 250, 0.15);
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: center;
+}
+
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 1.8rem;
+}
+
+.footer-link {
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #111;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23111'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+body.dark-mode .footer-link {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23fafafa'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+.footer-link:hover {
+  background: rgba(17, 17, 17, 0.08);
+  transform: translateY(-2px);
+}
+
+body.dark-mode .footer-link {
+  color: #fafafa;
+}
+
+body.dark-mode .footer-link:hover {
+  background: rgba(250, 250, 250, 0.12);
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-link {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid #111;
+  border-radius: 50%;
+  text-decoration: none;
+  color: #111;
+  transition: all 0.3s ease;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23111'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+body.dark-mode .social-link {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='7' fill='%23fafafa'/%3E%3C/svg%3E") 12 12, pointer;
+}
+
+.social-link:hover {
+  transform: translateY(-3px) scale(1.05);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .social-link {
+  background: rgba(25, 25, 25, 0.7);
+  border-color: #fafafa;
+  color: #fafafa;
+}
+
+body.dark-mode .social-link:hover {
+  background: rgba(35, 35, 35, 0.9);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.footer-copyright {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+/* ==========================================================
+🌟 GLOBAL TEXT & ANIMATIONS
+========================================================== */
+@keyframes fadeInOpacity {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+h1, h2, h3, p, button, .back-btn, label, .footer-link {
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.25);
+  transition: text-shadow 0.3s ease;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p,
+body.dark-mode button,
+body.dark-mode .back-btn,
+body.dark-mode label,
+body.dark-mode .footer-link {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}

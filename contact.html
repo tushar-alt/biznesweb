@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us – BizWeb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Architects+Daughter&display=swap" rel="stylesheet" />
+  <style>
+    /* ==========================================================
+    🎨 GLOBAL RESET & BASE
+    =========================================================== */
+
+    /* Light Mode: Glowing black ball */
+* {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%23000' opacity='0.8'/%3E%3Cfilter id='glow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='2' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3Ccircle cx='12' cy='12' r='8' fill='%23000' opacity='0.8' filter='url(%23glow)'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+/* Dark Mode: Glowing white ball */
+body.dark-mode *,
+html.dark-mode *,
+.dark-mode * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%23fff' opacity='0.9'/%3E%3Cfilter id='glow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='2' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3Ccircle cx='12' cy='12' r='8' fill='%23fff' opacity='0.9' filter='url(%23glow)'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      font-family: "Patrick Hand", "Architects Daughter", cursive;
+    }
+
+    /* ==========================================================
+    🧾 BACKGROUND — PARALLAX PAPER
+    =========================================================== */
+    body {
+      color: #111;
+      background-color: #f8f6f2;
+      background-image:
+        url("https://www.transparenttextures.com/patterns/paper-fibers.png"),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9), rgba(230,230,230,0.6));
+      background-blend-mode: multiply;
+      background-size: 400px 400px, cover;
+      transition: background 0.6s ease, color 0.6s ease;
+    }
+
+    body.dark-mode {
+      color: #fafafa;
+      background-color: #1c1c1c;
+      background-image:
+        url("https://www.transparenttextures.com/patterns/asfalt-light.png"),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05), rgba(0,0,0,0.9));
+      background-blend-mode: soft-light;
+    }
+
+    /* ==========================================================
+    🌌 DOODLE CANVAS
+    =========================================================== */
+    #possibilityCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    /* ==========================================================
+    🌗 THEME TOGGLE
+    =========================================================== */
+    .home-theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: max(30px, env(safe-area-inset-right));
+      z-index: 1000;
+    }
+
+    .theme-toggle {
+      width: 48px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .toggle-track {
+      width: 100%;
+      height: 100%;
+      border: 2px solid #111;
+      border-radius: 30px;
+      background: #fff;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-thumb {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #111;
+      border-radius: 50%;
+      background: #111;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s ease, background 0.3s ease;
+    }
+
+    body.dark-mode .toggle-track {
+      background: #222;
+      border-color: #fafafa;
+    }
+
+    body.dark-mode .toggle-thumb {
+      background: #fafafa;
+      border-color: #fafafa;
+      left: 24px;
+      transform: rotate(2deg);
+    }
+
+    /* ==========================================================
+    🔙 BACK BUTTON
+    =========================================================== */
+    .back-btn {
+      position: fixed;
+      top: 25px;
+      left: max(30px, env(safe-area-inset-left));
+      padding: 0.6rem 1.2rem;
+      font-family: "Patrick Hand", cursive;
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #111;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.35s ease;
+      z-index: 999;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-btn .arrow-back {
+      display: block;
+      width: 16px;
+      height: 2px;
+      background: currentColor;
+      transition: width 0.4s ease;
+    }
+
+    .back-btn:hover .arrow-back {
+      width: 24px;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .back-btn {
+      background: rgba(25, 25, 25, 0.7);
+      border-color: #fafafa;
+      color: #fafafa;
+    }
+
+    body.dark-mode .back-btn:hover {
+      background: rgba(35, 35, 35, 0.9);
+    }
+
+    /* ==========================================================
+    📄 CONTACT PAGE LAYOUT
+    =========================================================== */
+    .contact-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 7rem 2rem 4rem;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      animation: fadeInOpacity 1.2s ease forwards;
+    }
+
+    .contact-header h1 {
+      font-size: 2.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-header .subtitle {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ==========================================================
+    📝 CONTACT FORM — SKETCH STYLE
+    =========================================================== */
+    .contact-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      margin-top: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .form-group label {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      align-self: flex-start;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      font-family: "Patrick Hand", cursive;
+      font-size: 1.15rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #111;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .form-control:focus {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      transform: translateY(-1px);
+    }
+
+    body.dark-mode .form-control {
+      background: rgba(25, 25, 25, 0.7);
+      border-color: #fafafa;
+      color: #fafafa;
+    }
+
+    body.dark-mode .form-control:focus {
+      background: rgba(35, 35, 35, 0.9);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.08);
+    }
+
+    textarea.form-control {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      align-self: center;
+      margin-top: 0.8rem;
+      padding: 0.9rem 2.2rem;
+      font-family: "Patrick Hand", cursive;
+      font-size: 1.3rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #111;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+    }
+
+    body.dark-mode .submit-btn {
+      background: rgba(25, 25, 25, 0.7);
+      border-color: #fafafa;
+      color: #fafafa;
+    }
+
+    body.dark-mode .submit-btn:hover {
+      background: rgba(35, 35, 35, 0.9);
+      box-shadow: 0 6px 16px rgba(255, 255, 255, 0.1);
+    }
+
+    /* ==========================================================
+    🌊 HAND-DRAWN WAVE
+    =========================================================== */
+    .sketch-wave {
+      position: relative;
+      width: 200px;
+      height: 20px;
+      margin: 6px auto 0;
+      background: none;
+      overflow: visible;
+    }
+
+    .sketch-wave::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("image/svg+xml,%3Csvg width='200' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 12 Q30 4 55 12 T105 12 T155 12 T195 12' stroke='%23111' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-size: contain;
+      animation: waveMove 1.3s ease-in-out infinite alternate;
+      opacity: 0.8;
+      transform-origin: center;
+      filter: blur(0.2px);
+    }
+
+    body.dark-mode .sketch-wave::before {
+      background-image: url("image/svg+xml,%3Csvg width='200' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 12 Q30 4 55 12 T105 12 T155 12 T195 12' stroke='%23fafafa' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      opacity: 0.85;
+    }
+
+    @keyframes waveMove {
+      0% { transform: translateY(0) rotate(-1deg) scaleX(1); }
+      50% { transform: translateY(1px) rotate(1deg) scaleX(1.02); }
+      100% { transform: translateY(0) rotate(-1deg) scaleX(1); }
+    }
+
+    /* ==========================================================
+    📜 FOOTER
+    =========================================================== */
+    .footer {
+      text-align: center;
+      padding: 1.8rem 1rem;
+      font-size: 0.95rem;
+      opacity: 0.8;
+      color: inherit;
+    }
+
+    @keyframes fadeInOpacity {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1, h2, h3, p, li, .back-btn, label {
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.25);
+      transition: text-shadow 0.3s ease;
+    }
+
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode h3,
+    body.dark-mode p,
+    body.dark-mode li,
+    body.dark-mode .back-btn,
+    body.dark-mode label {
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+    }
+  </style>
+</head>
+<body>
+  <!-- 🌗 Theme Toggle -->
+  <div class="home-theme-toggle">
+    <div id="themeToggle" class="theme-toggle" tabindex="0" role="button" aria-label="Toggle dark mode">
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </div>
+
+  <!-- 🔙 Back Button -->
+  <div class="back-btn" onclick="window.history.back()" tabindex="0" role="button" aria-label="Go back">
+    <span class="arrow-back"></span> Back
+  </div>
+
+  <!-- 📄 Content -->
+  <section class="contact-page">
+    <div class="contact-header">
+      <h1>📬 Let’s Talk!</h1>
+      <p class="subtitle">Have a project in mind? We’d love to hear from you.</p>
+      <div class="sketch-wave"></div>
+    </div>
+
+    <form class="contact-form" action="#" method="POST">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" class="form-control" required />
+      </div>
+
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea id="message" class="form-control" placeholder="Tell us about your project..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Send Message ✨</button>
+    </form>
+  </section>
+
+  <footer class="footer">
+    © 2025 BizWeb — Connecting Ideas to Technology
+  </footer>
+
+  <canvas id="possibilityCanvas"></canvas>
+
+  <script>
+    // ========== THEME TOGGLE ==========
+    const body = document.body;
+    const themeToggle = document.getElementById("themeToggle");
+
+    if (localStorage.getItem("theme") === "dark") {
+      body.classList.add("dark-mode");
+    }
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+      });
+      themeToggle.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          themeToggle.click();
+        }
+      });
+    }
+
+    // ========== DOODLE CANVAS ==========
+    const canvas = document.getElementById("possibilityCanvas");
+    const ctx = canvas ? canvas.getContext("2d") : null;
+
+    function sizeCanvas() {
+      if (!canvas) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    if (canvas && ctx) {
+      sizeCanvas();
+      Object.assign(canvas.style, {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: "-1",
+        pointerEvents: "none",
+        opacity: 0,
+        transition: "opacity 600ms ease",
+      });
+      window.addEventListener("resize", sizeCanvas);
+    }
+
+    let shapes = [];
+
+    function currentStroke() {
+      return body.classList.contains("dark-mode")
+        ? "rgba(250, 250, 250, 0.55)"
+        : "rgba(17, 17, 17, 0.55)";
+    }
+
+    function randomShape() {
+      if (!canvas) return null;
+      const types = ["circle", "triangle", "line"];
+      return {
+        type: types[Math.floor(Math.random() * types.length)],
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: 10 + Math.random() * 30,
+        opacity: 0.3 + Math.random() * 0.7,
+        dx: (Math.random() - 0.5) * 0.7,
+        dy: (Math.random() - 0.5) * 0.7,
+      };
+    }
+
+    function drawShape(s) {
+      if (!ctx || !s) return;
+      ctx.save();
+
+      const elements = document.querySelectorAll("h1, p, .back-btn, .contact-form");
+      let fadeFactor = 1;
+      elements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dist = Math.hypot(s.x - centerX, s.y - centerY);
+        if (dist < 250) fadeFactor = Math.min(fadeFactor, dist / 250);
+      });
+
+      ctx.globalAlpha = s.opacity * fadeFactor;
+      ctx.strokeStyle = currentStroke();
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+
+      if (s.type === "circle") {
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+      } else if (s.type === "triangle") {
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x + s.size, s.y + s.size);
+        ctx.lineTo(s.x - s.size, s.y + s.size);
+        ctx.closePath();
+      } else {
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x + s.size * 1.5, s.y + s.size * 0.3);
+      }
+
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function animate() {
+      if (!ctx || !canvas) return;
+
+      ctx.fillStyle = body.classList.contains("dark-mode")
+        ? "rgba(0, 0, 0, 0.08)"
+        : "rgba(255, 255, 255, 0.06)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (const s of shapes) {
+        s.x += s.dx;
+        s.y += s.dy;
+
+        if (s.x < -60) s.x = canvas.width + 60;
+        if (s.x > canvas.width + 60) s.x = -60;
+        if (s.y < -60) s.y = canvas.height + 60;
+        if (s.y > canvas.height + 60) s.y = -60;
+
+        drawShape(s);
+      }
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    let activeHoverCount = 0;
+
+    function showDoodles({ count, speedScale = 1, sizeScale = 1, opacityScale = 1, targetOpacity = 1 }) {
+      shapes = Array.from({ length: count }, () => randomShape()).filter(Boolean);
+      shapes.forEach((s) => {
+        s.dx *= speedScale;
+        s.dy *= speedScale;
+        s.size *= sizeScale;
+        s.opacity *= opacityScale;
+      });
+
+      if (canvas) {
+        canvas.style.transition = "opacity 1.4s ease-in";
+        canvas.style.opacity = String(targetOpacity);
+      }
+    }
+
+    function onEnter(config) {
+      activeHoverCount++;
+      showDoodles(config);
+    }
+
+    function onLeave() {
+      activeHoverCount = Math.max(0, activeHoverCount - 1);
+      if (activeHoverCount === 0 && canvas) {
+        canvas.style.transition = "opacity 0.6s ease-out";
+        canvas.style.opacity = "0";
+      }
+    }
+
+    function bindHover(selector, config) {
+      const nodes = document.querySelectorAll(selector);
+      nodes.forEach((el) => {
+        el.addEventListener("mouseenter", () => onEnter(config));
+        el.addEventListener("mouseleave", onLeave);
+      });
+    }
+
+    bindHover(".back-btn", { count: 60, speedScale: 0.4, targetOpacity: 0.8 });
+    bindHover(".submit-btn", { count: 70, speedScale: 0.5, targetOpacity: 0.85 });
+
+    function isTouchDevice() {
+      return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    }
+
+    if (isTouchDevice()) {
+      window.addEventListener("load", () => {
+        showDoodles({
+          count: 50,
+          speedScale: 0.3,
+          sizeScale: 0.8,
+          opacityScale: 0.7,
+          targetOpacity: 0.8,
+        });
+      });
+    }
+
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+      const intensity = 25;
+      targetX = (e.clientX / window.innerWidth - 0.5) * intensity;
+      targetY = (e.clientY / window.innerHeight - 0.5) * intensity;
+    });
+
+    function animatePaperLight() {
+      currentX += (targetX - currentX) * 0.05;
+      currentY += (targetY - currentY) * 0.05;
+
+      const isDark = body.classList.contains("dark-mode");
+      const texture = isDark
+        ? "url('https://www.transparenttextures.com/patterns/asfalt-light.png')"
+        : "url('https://www.transparenttextures.com/patterns/paper-fibers.png')";
+      const glow = isDark
+        ? `radial-gradient(circle at ${50 + currentX / 2}% ${50 + currentY / 2}%, rgba(255,255,255,0.05), rgba(0,0,0,0.9))`
+        : `radial-gradient(circle at ${50 + currentX / 2}% ${50 + currentY / 2}%, rgba(255,255,255,0.9), rgba(230,230,230,0.6))`;
+
+      body.style.backgroundImage = `${texture}, ${glow}`;
+      body.style.backgroundBlendMode = isDark ? "soft-light" : "multiply";
+      body.style.backgroundPosition = `${currentX}px ${currentY}px`;
+      body.style.backgroundSize = "400px 400px, cover";
+
+      requestAnimationFrame(animatePaperLight);
+    }
+    animatePaperLight();
+
+    // Form submission (optional: prevent default for demo)
+    document.querySelector('.contact-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thank you! We’ll get back to you soon.');
+      // In production, connect to your backend (e.g., Formspree, Netlify Forms, or custom API)
+    });
+  </script>
+</body>
+</html>

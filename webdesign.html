@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Design – BizWeb</title>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Architects+Daughter&display=swap" rel="stylesheet" />
+  <style>
+    /* ==========================================================
+    🎨 GLOBAL RESET & BASE
+    =========================================================== */
+
+    /* Light Mode: Glowing black ball */
+* {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%23000' opacity='0.8'/%3E%3Cfilter id='glow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='2' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3Ccircle cx='12' cy='12' r='8' fill='%23000' opacity='0.8' filter='url(%23glow)'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+/* Dark Mode: Glowing white ball */
+body.dark-mode *,
+html.dark-mode *,
+.dark-mode * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='8' fill='%23fff' opacity='0.9'/%3E%3Cfilter id='glow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='2' result='coloredBlur'/%3E%3CfeMerge%3E%3CfeMergeNode in='coloredBlur'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3Ccircle cx='12' cy='12' r='8' fill='%23fff' opacity='0.9' filter='url(%23glow)'/%3E%3C/svg%3E") 12 12, auto;
+}
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: hidden; /* 🔒 No scroll */
+      scroll-behavior: smooth;
+      font-family: "Patrick Hand", "Architects Daughter", cursive;
+    }
+
+    /* ==========================================================
+    🧾 BACKGROUND — PARALLAX PAPER (FIXED URLs)
+    =========================================================== */
+    body {
+      color: #111;
+      background-color: #f8f6f2;
+      background-image:
+        url("https://www.transparenttextures.com/patterns/paper-fibers.png"),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9), rgba(230,230,230,0.6));
+      background-blend-mode: multiply;
+      background-size: 400px 400px, cover;
+      transition: background 0.6s ease, color 0.6s ease;
+    }
+
+    body.dark-mode {
+      color: #fafafa;
+      background-color: #1c1c1c;
+      background-image:
+        url("https://www.transparenttextures.com/patterns/asfalt-light.png"),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05), rgba(0,0,0,0.9));
+      background-blend-mode: soft-light;
+    }
+
+    /* ==========================================================
+    🌌 DOODLE CANVAS
+    =========================================================== */
+    #possibilityCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    /* ==========================================================
+    🌗 THEME TOGGLE
+    =========================================================== */
+    .home-theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: max(30px, env(safe-area-inset-right));
+      z-index: 1000;
+    }
+
+    .theme-toggle {
+      width: 48px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .toggle-track {
+      width: 100%;
+      height: 100%;
+      border: 2px solid #111;
+      border-radius: 30px;
+      background: #fff;
+      transition: background 0.3s ease;
+    }
+
+    .toggle-thumb {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #111;
+      border-radius: 50%;
+      background: #111;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s ease, background 0.3s ease;
+    }
+
+    body.dark-mode .toggle-track {
+      background: #222;
+      border-color: #fafafa;
+    }
+
+    body.dark-mode .toggle-thumb {
+      background: #fafafa;
+      border-color: #fafafa;
+      left: 24px;
+      transform: rotate(2deg);
+    }
+
+    /* ==========================================================
+    🔙 BACK BUTTON
+    =========================================================== */
+    .back-btn {
+      position: fixed;
+      top: 25px;
+      left: max(30px, env(safe-area-inset-left));
+      padding: 0.6rem 1.2rem;
+      font-family: "Patrick Hand", cursive;
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #111;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.35s ease;
+      z-index: 999;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-btn .arrow-back {
+      display: block;
+      width: 16px;
+      height: 2px;
+      background: currentColor;
+      transition: width 0.4s ease;
+    }
+
+    .back-btn:hover .arrow-back {
+      width: 24px;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .back-btn {
+      background: rgba(25, 25, 25, 0.7);
+      border-color: #fafafa;
+      color: #fafafa;
+    }
+
+    body.dark-mode .back-btn:hover {
+      background: rgba(35, 35, 35, 0.9);
+    }
+
+    /* ==========================================================
+    📄 PAGE LAYOUT — FOOTER ALWAYS AT BOTTOM
+    =========================================================== */
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: 7rem;
+      /* 🔥 NO padding-bottom */
+    }
+
+    .webdesign-container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      gap: 2.5rem;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .webdesign-content {
+      flex: 1;
+      min-width: 300px;
+      max-width: 600px;
+    }
+
+    .webdesign-tiles {
+      flex: 0 0 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+      min-width: 280px;
+    }
+
+    .detail-header h1 {
+      font-size: 2.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-header .subtitle {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      margin-bottom: 1.2rem;
+    }
+
+    .detail-content {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      text-align: left;
+    }
+
+    .detail-content p {
+      margin-bottom: 1.2rem;
+    }
+
+    .detail-content ul {
+      text-align: left;
+      padding-left: 1.8rem;
+      margin: 1.2rem 0;
+    }
+
+    .detail-content li {
+      margin-bottom: 0.6rem;
+    }
+
+    /* ==========================================================
+    🌊 HAND-DRAWN WAVE
+    =========================================================== */
+    .sketch-wave {
+      position: relative;
+      width: 200px;
+      height: 20px;
+      margin: 6px auto 0;
+      background: none;
+      overflow: visible;
+    }
+
+    .sketch-wave::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("image/svg+xml,%3Csvg width='200' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 12 Q30 4 55 12 T105 12 T155 12 T195 12' stroke='%23111' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-size: contain;
+      animation: waveMove 1.3s ease-in-out infinite alternate;
+      opacity: 0.8;
+      transform-origin: center;
+      filter: blur(0.2px);
+    }
+
+    body.dark-mode .sketch-wave::before {
+      background-image: url("image/svg+xml,%3Csvg width='200' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 12 Q30 4 55 12 T105 12 T155 12 T195 12' stroke='%23fafafa' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      opacity: 0.85;
+    }
+
+    @keyframes waveMove {
+      0% { transform: translateY(0) rotate(-1deg) scaleX(1); }
+      50% { transform: translateY(1px) rotate(1deg) scaleX(1.02); }
+      100% { transform: translateY(0) rotate(-1deg) scaleX(1); }
+    }
+
+    /* ==========================================================
+    ✨ DESIGN TILES
+    =========================================================== */
+    .design-tile-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .design-tile {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.75);
+      border: 2px solid rgba(17, 17, 17, 0.15);
+      border-radius: 16px;
+      padding: 1.8rem 1.4rem;
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+      backdrop-filter: blur(6px);
+      transition: all 0.35s ease;
+      overflow: hidden;
+      color: #111;
+      font-family: "Patrick Hand", cursive;
+      text-align: center;
+    }
+
+    .design-tile::before,
+    .design-tile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 2px solid #111;
+      border-radius: 16px;
+      opacity: 0;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+    }
+
+    .design-tile:hover::before {
+      opacity: 1;
+      transform: scale(1.04) rotate(-0.8deg);
+      animation: drawBorder 1.2s ease-in-out forwards;
+    }
+
+    .design-tile:hover::after {
+      opacity: 0.6;
+      transform: scale(0.96) rotate(0.5deg);
+      animation: drawBorderReverse 1.2s ease-in-out forwards;
+    }
+
+    @keyframes drawBorder {
+      0% { clip-path: polygon(0 100%, 0 100%, 0 100%, 0 100%); }
+      100% { clip-path: polygon(0 100%, 0 0, 100% 0, 100% 100%); }
+    }
+
+    @keyframes drawBorderReverse {
+      0% { clip-path: polygon(100% 0, 100% 0, 100% 0, 100% 0); }
+      100% { clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%); }
+    }
+
+    .design-tile:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.18),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .design-tile h2 {
+      font-size: 1.45rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .design-tile p {
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    body.dark-mode .design-tile {
+      color: #fafafa;
+      background: rgba(25, 25, 25, 0.75);
+      border-color: rgba(250, 250, 250, 0.15);
+      box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(0, 0, 0, 0.4) inset;
+    }
+
+    body.dark-mode .design-tile::before,
+    body.dark-mode .design-tile::after {
+      border-color: #fafafa;
+    }
+
+    body.dark-mode .design-tile:hover {
+      background: rgba(35, 35, 35, 0.92);
+      box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(0, 0, 0, 0.6) inset;
+    }
+
+    /* ==========================================================
+    📏 FOOTER DIVIDER (reduced margin)
+    ========================================================== */
+    .footer-divider {
+      width: 100%;
+      height: 20px;
+      background-image: url("image/svg+xml,%3Csvg width='100%25' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q30 4 60 10 T120 10 T180 10 T240 10 T300 10 T360 10 T420 10 T480 10 T540 10 T600 10 T660 10 T720 10 T780 10 T840 10 T900 10 T960 10 T1020 10 T1080 10' stroke='%23111' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      background-repeat: repeat-x;
+      background-size: auto 20px;
+      opacity: 0.7;
+      margin: 1rem auto 0.5rem;
+    }
+
+    body.dark-mode .footer-divider {
+      background-image: url("image/svg+xml,%3Csvg width='100%25' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q30 4 60 10 T120 10 T180 10 T240 10 T300 10 T360 10 T420 10 T480 10 T540 10 T600 10 T660 10 T720 10 T780 10 T840 10 T900 10 T960 10 T1020 10 T1080 10' stroke='%23fafafa' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+      opacity: 0.8;
+    }
+
+    /* ==========================================================
+    📄 FOOTER — STICKS TO BOTTOM
+    ========================================================== */
+    .site-footer {
+      padding: 1.2rem 2rem;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(6px);
+      border-top: 2px solid rgba(17, 17, 17, 0.1);
+      text-align: center;
+      margin-top: auto;
+    }
+
+    body.dark-mode .site-footer {
+      background: rgba(25, 25, 25, 0.5);
+      border-top-color: rgba(250, 250, 250, 0.15);
+    }
+
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .footer-logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-link {
+      font-family: "Patrick Hand", cursive;
+      font-size: 1.15rem;
+      text-decoration: none;
+      color: #111;
+      padding: 0.3rem 0.7rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .footer-link:hover {
+      background: rgba(17, 17, 17, 0.08);
+      transform: translateY(-2px);
+    }
+
+    body.dark-mode .footer-link {
+      color: #fafafa;
+    }
+
+    body.dark-mode .footer-link:hover {
+      background: rgba(250, 250, 250, 0.12);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.9rem;
+    }
+
+    .social-link {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Patrick Hand", cursive;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #111;
+      border-radius: 50%;
+      text-decoration: none;
+      color: #111;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode .social-link {
+      background: rgba(25, 25, 25, 0.7);
+      border-color: #fafafa;
+      color: #fafafa;
+    }
+
+    body.dark-mode .social-link:hover {
+      background: rgba(35, 35, 35, 0.9);
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-copyright {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    @keyframes fadeInOpacity {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1, h2, h3, p, li, .back-btn, .footer-link, .design-tile {
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.25);
+      transition: text-shadow 0.3s ease;
+    }
+
+    body.dark-mode h1,
+    body.dark-mode h2,
+    body.dark-mode h3,
+    body.dark-mode p,
+    body.dark-mode li,
+    body.dark-mode .back-btn,
+    body.dark-mode .footer-link,
+    body.dark-mode .design-tile {
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+    }
+
+    @media (max-width: 900px) {
+      .webdesign-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .webdesign-tiles {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 🌗 Theme Toggle -->
+  <div class="home-theme-toggle">
+    <div id="themeToggle" class="theme-toggle" tabindex="0" role="button" aria-label="Toggle dark mode">
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+  </div>
+
+  <!-- 🔙 Back Button -->
+  <div class="back-btn" onclick="window.history.back()" tabindex="0" role="button" aria-label="Go back">
+    <span class="arrow-back"></span> Back
+  </div>
+
+  <div class="page-wrapper">
+    <div class="webdesign-container">
+      <div class="webdesign-content">
+        <div class="detail-header">
+          <h1>🎨 Website Design</h1>
+          <p class="subtitle">Where brand identity meets user experience.</p>
+          <div class="sketch-wave"></div>
+        </div>
+
+        <div class="detail-content">
+          <p>We craft visually striking, user-friendly website designs that reflect your brand’s personality while driving engagement and conversions — whether it’s a corporate site, portfolio, or e-commerce store.</p>
+
+          <p>Our design process includes:</p>
+          <ul>
+            <li><strong>Brand Alignment:</strong> Mood boards, color palettes, and typography that match your values</li>
+            <li><strong>Wireframing & Prototyping:</strong> Early validation of layout and user flow</li>
+            <li><strong>Responsive UI:</strong> Beautiful on every device — mobile, tablet, and desktop</li>
+            <li><strong>Design-to-Code Handoff:</strong> Pixel-perfect implementation by our dev team</li>
+          </ul>
+
+          <p>For our German clients, we blend minimalist European aesthetics with intuitive navigation and clear information architecture — ensuring your website doesn’t just look great, but works brilliantly for your audience.</p>
+        </div>
+      </div>
+
+      <div class="webdesign-tiles">
+        <a href="#" class="design-tile-link">
+          <div class="design-tile">
+            <h2>🖼️ Design Portfolio</h2>
+            <p>Explore our gallery of brand-focused, conversion-driven website designs.</p>
+          </div>
+        </a>
+
+        <a href="contact.html" class="design-tile-link">
+          <div class="design-tile">
+            <h2>✏️ Need a New Design?</h2>
+            <p>Let’s shape your brand’s digital presence — beautiful, functional, and memorable.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ✨ FOOTER — FINAL ELEMENT -->
+    <div class="footer-divider"></div>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <strong>BizWeb</strong>
+        </div>
+        <nav class="footer-nav">
+          <a href="services.html" class="footer-link">Services</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </nav>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn" class="social-link">in</a>
+          <a href="#" aria-label="GitHub" class="social-link">gh</a>
+          <a href="mailto:hello@bizweb.example" aria-label="Email" class="social-link">✉️</a>
+        </div>
+        <div class="footer-copyright">
+          © 2025 BizWeb — Connecting Ideas to Technology
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <canvas id="possibilityCanvas"></canvas>
+
+  <script>
+    // ========== THEME TOGGLE ==========
+    const body = document.body;
+    const themeToggle = document.getElementById("themeToggle");
+
+    if (localStorage.getItem("theme") === "dark") {
+      body.classList.add("dark-mode");
+    }
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+      });
+      themeToggle.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          themeToggle.click();
+        }
+      });
+    }
+
+    // ========== DOODLE CANVAS ==========
+    const canvas = document.getElementById("possibilityCanvas");
+    const ctx = canvas ? canvas.getContext("2d") : null;
+
+    function sizeCanvas() {
+      if (!canvas) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    if (canvas && ctx) {
+      sizeCanvas();
+      Object.assign(canvas.style, {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: "-1",
+        pointerEvents: "none",
+        opacity: 0,
+        transition: "opacity 600ms ease",
+      });
+      window.addEventListener("resize", sizeCanvas);
+    }
+
+    let shapes = [];
+
+    function currentStroke() {
+      return body.classList.contains("dark-mode")
+        ? "rgba(250, 250, 250, 0.55)"
+        : "rgba(17, 17, 17, 0.55)";
+    }
+
+    function randomShape() {
+      if (!canvas) return null;
+      const types = ["circle", "triangle", "line"];
+      return {
+        type: types[Math.floor(Math.random() * types.length)],
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: 10 + Math.random() * 30,
+        opacity: 0.3 + Math.random() * 0.7,
+        dx: (Math.random() - 0.5) * 0.7,
+        dy: (Math.random() - 0.5) * 0.7,
+      };
+    }
+
+    function drawShape(s) {
+      if (!ctx || !s) return;
+      ctx.save();
+
+      const elements = document.querySelectorAll("h1, p, .back-btn, .design-tile, .detail-content");
+      let fadeFactor = 1;
+      elements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dist = Math.hypot(s.x - centerX, s.y - centerY);
+        if (dist < 250) fadeFactor = Math.min(fadeFactor, dist / 250);
+      });
+
+      ctx.globalAlpha = s.opacity * fadeFactor;
+      ctx.strokeStyle = currentStroke();
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+
+      if (s.type === "circle") {
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+      } else if (s.type === "triangle") {
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x + s.size, s.y + s.size);
+        ctx.lineTo(s.x - s.size, s.y + s.size);
+        ctx.closePath();
+      } else {
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x + s.size * 1.5, s.y + s.size * 0.3);
+      }
+
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function animate() {
+      if (!ctx || !canvas) return;
+
+      ctx.fillStyle = body.classList.contains("dark-mode")
+        ? "rgba(0, 0, 0, 0.08)"
+        : "rgba(255, 255, 255, 0.06)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (const s of shapes) {
+        s.x += s.dx;
+        s.y += s.dy;
+
+        if (s.x < -60) s.x = canvas.width + 60;
+        if (s.x > canvas.width + 60) s.x = -60;
+        if (s.y < -60) s.y = canvas.height + 60;
+        if (s.y > canvas.height + 60) s.y = -60;
+
+        drawShape(s);
+      }
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    let activeHoverCount = 0;
+
+    function showDoodles({ count, speedScale = 1, sizeScale = 1, opacityScale = 1, targetOpacity = 1 }) {
+      shapes = Array.from({ length: count }, () => randomShape()).filter(Boolean);
+      shapes.forEach((s) => {
+        s.dx *= speedScale;
+        s.dy *= speedScale;
+        s.size *= sizeScale;
+        s.opacity *= opacityScale;
+      });
+
+      if (canvas) {
+        canvas.style.transition = "opacity 1.4s ease-in";
+        canvas.style.opacity = String(targetOpacity);
+      }
+    }
+
+    function onEnter(config) {
+      activeHoverCount++;
+      showDoodles(config);
+    }
+
+    function onLeave() {
+      activeHoverCount = Math.max(0, activeHoverCount - 1);
+      if (activeHoverCount === 0 && canvas) {
+        canvas.style.transition = "opacity 0.6s ease-out";
+        canvas.style.opacity = "0";
+      }
+    }
+
+    function bindHover(selector, config) {
+      const nodes = document.querySelectorAll(selector);
+      nodes.forEach((el) => {
+        el.addEventListener("mouseenter", () => onEnter(config));
+        el.addEventListener("mouseleave", onLeave);
+      });
+    }
+
+    bindHover(".back-btn", { count: 60, speedScale: 0.4, targetOpacity: 0.8 });
+    bindHover(".design-tile", { count: 70, speedScale: 0.35, targetOpacity: 0.85 });
+    bindHover(".footer-link", { count: 40, speedScale: 0.3, targetOpacity: 0.7 });
+
+    function isTouchDevice() {
+      return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    }
+
+    if (isTouchDevice()) {
+      window.addEventListener("load", () => {
+        showDoodles({
+          count: 60,
+          speedScale: 0.35,
+          sizeScale: 0.85,
+          opacityScale: 0.75,
+          targetOpacity: 0.85,
+        });
+      });
+    }
+
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+      const intensity = 25;
+      targetX = (e.clientX / window.innerWidth - 0.5) * intensity;
+      targetY = (e.clientY / window.innerHeight - 0.5) * intensity;
+    });
+
+    function animatePaperLight() {
+      currentX += (targetX - currentX) * 0.05;
+      currentY += (targetY - currentY) * 0.05;
+
+      const isDark = body.classList.contains("dark-mode");
+      const texture = isDark
+        ? "url('https://www.transparenttextures.com/patterns/asfalt-light.png')"
+        : "url('https://www.transparenttextures.com/patterns/paper-fibers.png')";
+      const glow = isDark
+        ? `radial-gradient(circle at ${50 + currentX / 2}% ${50 + currentY / 2}%, rgba(255,255,255,0.05), rgba(0,0,0,0.9))`
+        : `radial-gradient(circle at ${50 + currentX / 2}% ${50 + currentY / 2}%, rgba(255,255,255,0.9), rgba(230,230,230,0.6))`;
+
+      body.style.backgroundImage = `${texture}, ${glow}`;
+      body.style.backgroundBlendMode = isDark ? "soft-light" : "multiply";
+      body.style.backgroundPosition = `${currentX}px ${currentY}px`;
+      body.style.backgroundSize = "400px 400px, cover";
+
+      requestAnimationFrame(animatePaperLight);
+    }
+    animatePaperLight();
+  </script>
+</body>
+</html>
